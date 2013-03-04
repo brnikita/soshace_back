@@ -1,5 +1,4 @@
 var mongodb = require('mongodb'),
-    staticDomain = 'http://static.soshace.com',
     server = new mongodb.Server("127.0.0.1", 27017, {auto_reconnect: true, poolSize: 1}),
     db_connector = new mongodb.Db('soshace', server, {w: 1}),
     openDb = function(callback){
@@ -19,7 +18,19 @@ var mongodb = require('mongodb'),
     };
 
 exports.index = function(req, res){
-    res.render('index', {title: 'Soshace', domain: staticDomain});
+    res.render('layout', {title: 'Soshace'});
+};
+exports.ping = function(req, res){
+    var data = '',
+        callback = req.query['callback'];
+    if(callback){
+        data = req.query['callback'] + '.call(window, {response: "pong"})';
+    }else{
+        data = 'console.log(Parameter "callback" is empty.);';
+    }
+    res.set({
+        'Content-Type': 'application/javascript'
+    }).send(200, data);
 };
 exports.savePost = function(req, res){
     openDb(function(err, db){

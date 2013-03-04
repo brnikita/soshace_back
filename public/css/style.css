@@ -1,0 +1,22 @@
+*{
+    padding:0;
+    margin:0;
+}
+ul{
+    list-style: none;
+}
+body{
+    font: 14px/16px Arial;
+    color: #4e4e4e;
+}
+label{
+    cursor: pointer;
+}
+h1, h2, h3, h4, h5{
+    font-weight:normal;
+}
+#addPlace{}
+#addPlace input, #addPlace textarea{
+    display:block;
+    margin: 5px;
+}
