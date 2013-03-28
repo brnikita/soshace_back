@@ -20,6 +20,8 @@ var mongodb = require('mongodb'),
 exports.index = function(req, res){
     res.render('layout', {title: 'Soshace'});
 };
+
+
 exports.ping = function(req, res){
     var data = '',
         callback = req.query['callback'];
@@ -32,28 +34,49 @@ exports.ping = function(req, res){
         'Content-Type': 'application/javascript'
     }).send(200, data);
 };
-exports.savePost = function(req, res){
+
+exports.getCountries = function(req, res){
     openDb(function(err, db){
         if(err) {
             sendData(res, {status: 'error'});
             console.log(err);
             return;
         }
-        db.collection('places', function(err, collection) {
+        db.collection('country_', function(err, collection) {
             if(err) {
                 sendData(res, {status: 'error'});
                 console.log(err);
                 return;
             }
-            collection.insert(req.body, {safe:true}, function(err, result) {
-                if(err){
-                    sendData(res, {status: 'error'});
-                    console.log(err);
-                    return;
-                }
-                sendData(res, {status: 'ok'});
-                console.log('Place inserted', result);
+            collection.find().toArray(function(err, docs) {
+                sendData(res, docs);
             });
         });
     });
 };
+
+//exports.savePost = function(req, res){
+//    openDb(function(err, db){
+//        if(err) {
+//            sendData(res, {status: 'error'});
+//            console.log(err);
+//            return;
+//        }
+//        db.collection('places', function(err, collection) {
+//            if(err) {
+//                sendData(res, {status: 'error'});
+//                console.log(err);
+//                return;
+//            }
+//            collection.insert(req.body, {safe:true}, function(err, result) {
+//                if(err){
+//                    sendData(res, {status: 'error'});
+//                    console.log(err);
+//                    return;
+//                }
+//                sendData(res, {status: 'ok'});
+//                console.log('Place inserted', result);
+//            });
+//        });
+//    });
+//};

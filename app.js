@@ -24,4 +24,4 @@ http.createServer(app).listen(app.get('port'), function(){
 //Routes:
 app.get('/', actions.index);
 app.get('/ping', actions.ping);
-app.post('/save_post', actions.savePost);
+app.get('/getCountries', actions.getCountries);

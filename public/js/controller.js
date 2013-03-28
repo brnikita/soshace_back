@@ -10,6 +10,8 @@ function AddPost($scope, $http){
         $http.post('/save_post', postData);
     }
 }
-function Index($scope){
-
+function Index($scope, $http){
+    $http.get('/getCountries').success(function(data) {
+        $scope.countries = data;
+    });
 }
