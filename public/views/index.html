@@ -1,5 +1,5 @@
-<ul>
-    <li ng-repeat="country in countries">
+<select>
+    <option ng-repeat="country in countries" value="{{country._id}}">
         {{country.country_name_ru}}
-    </li>
-</ul>
+    </option>
+</select>
