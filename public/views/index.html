@@ -1,5 +1,2 @@
-<ul>
-    <li ng-repeat="country in countries">
-        {{country.country_name_ru}}
-    </li>
-</ul>
+<select ng-model="country" ng-options="c.country_name_ru for c in countries"></select>
+<select ng-model="city" ng-options="c.city_name_ru for c in cities"></select>

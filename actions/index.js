@@ -1,6 +1,8 @@
 var mongodb = require('mongodb'),
+    ObjectID = mongodb .ObjectID;
     server = new mongodb.Server("127.0.0.1", 27017, {auto_reconnect: true, poolSize: 1}),
     db_connector = new mongodb.Db('soshace', server, {w: 1}),
+
     openDb = function(callback){
         if(typeof openDb.err === 'object' || typeof openDb.db === 'object'){
             return callback(openDb.err, openDb.db);
@@ -11,6 +13,7 @@ var mongodb = require('mongodb'),
             callback(err, db);
         });
     },
+
     sendData = function(res, data){
         res.set({
             'Content-Type': 'application/json'
@@ -49,6 +52,29 @@ exports.getCountries = function(req, res){
                 return;
             }
             collection.find().toArray(function(err, docs) {
+                sendData(res, docs);
+            });
+        });
+    });
+};
+exports.getCities = function(req, res){
+    var countryId  = req.body['countryId'];
+    if(!countryId) return;
+    console.log('countryId', countryId);
+    openDb(function(err, db){
+        if(err) {
+            sendData(res, {status: 'error'});
+            console.log(err);
+            return;
+        }
+        db.collection('city_', function(err, collection) {
+            if(err) {
+                sendData(res, {status: 'error'});
+                console.log(err);
+                return;
+            }
+            collection.find({id_country: new ObjectID(countryId)}).toArray(function(err, docs) {
+                console.log(docs);
                 sendData(res, docs);
             });
         });

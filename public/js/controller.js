@@ -11,7 +11,24 @@ function AddPost($scope, $http){
     }
 }
 function Index($scope, $http){
-    $http.get('/getCountries').success(function(data) {
-        $scope.countries = data;
-    });
+    ({
+        init: function(){
+            var T = this;
+            $http.post('/getCountries').success(function(data) {
+                $scope.countries = data;
+                $scope.country = data[0];
+                $scope.$watch('country', function(newValue, oldValue) {
+                    T.changeCountry(newValue, oldValue);
+                });
+            });
+        },
+        changeCountry: function(newValue, oldValue){
+            var T = this;
+            console.log('changeCountry', newValue);
+            $http.post('/getCities', {countryId: newValue._id}).success(function(data) {
+                $scope.cities = data;
+                $scope.city = data[0];
+            });
+        }
+    }).init();
 }
