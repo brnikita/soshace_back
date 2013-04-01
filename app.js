@@ -1,7 +1,7 @@
 var express = require('express'),
     http = require('http'),
     path = require('path'),
-    actions = require('./actions'),
+    src = require('./src'),
     app = express();
 app.configure(function(){
     app.set('port', process.env.PORT || 80);
@@ -22,7 +22,8 @@ http.createServer(app).listen(app.get('port'), function(){
 });
 
 //Routes:
-app.get('/', actions.index);
-app.get('/ping', actions.ping);
-app.post('/getCountries', actions.getCountries);
-app.post('/getCities', actions.getCities);
+app.get('/', src.index);
+app.get('/ping', src.ping);
+app.get('/baseConvert', src.baseConvert);
+app.post('/getCountries', src.getCountries);
+app.post('/getCities', src.getCities);
