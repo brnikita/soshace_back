@@ -1,80 +1,89 @@
-var db = require('./db'),
-    base = require('./base');
+/* Simple JavaScript Inheritance
+ * By John Resig http://ejohn.org/
+ * MIT Licensed.
+ */
+// Inspired by base2 and Prototype
+var initializing = false, fnTest = /xyz/.test(function(){xyz;}) ? /\b_super\b/ : /.*/;
 
-exports.index = function(req, res){
-    res.render('layout', {title: 'Soshace'});
-};
+// The base Class implementation (does nothing)
+var Class = function(){};
 
-exports.ping = function(req, res){
-    var data = '',
-        callback = req.query['callback'];
-    if(callback){
-        data = req.query['callback'] + '.call(window, {response: "pong"})';
-    }else{
-        data = 'console.log(Parameter "callback" is empty.);';
+
+// Метод создания нового экземпляра.
+function instance(){
+    initializing = true;
+    var instance = new this();
+    initializing = false;
+    if (typeof instance.init == 'function') {
+        instance.init.apply(instance, arguments);
     }
-    res.set({
-        'Content-Type': 'application/javascript'
-    }).send(200, data);
+    return instance;
+}
+Class.instance = instance;
+
+// Create a new Class that inherits from this class
+Class.extend = function(prop) {
+    var _super = this.prototype;
+
+    // Instantiate a base class (but only create the instance,
+    // don't run the init constructor)
+    initializing = true;
+    var prototype = new this();
+    initializing = false;
+
+    // Copy the properties over onto the new prototype
+    for (var name in prop) {
+        // Check if we're overwriting an existing function
+        prototype[name] = typeof prop[name] == "function" &&
+            typeof _super[name] == "function" && fnTest.test(prop[name]) ?
+            (function(name, fn){
+                return function() {
+                    var tmp = this._super;
+
+                    // Add a new ._super() method that is the same method
+                    // but on the super-class
+                    this._super = _super[name];
+
+                    // The method only need to be bound temporarily, so we
+                    // remove it when we're done executing
+                    var ret = fn.apply(this, arguments);
+                    this._super = tmp;
+
+                    return ret;
+                };
+            })(name, prop[name]) :
+            prop[name];
+    }
+
+    // The dummy class constructor
+    function Class() {
+        // All construction is actually done in the init method
+        if (!initializing && typeof this.init == 'function') {
+            this.init.apply(this, arguments);
+        }
+    }
+
+    // Populate our constructed prototype object
+    Class.prototype = prototype;
+
+    // Enforce the constructor to be what we expect
+    Class.prototype.constructor = Class;
+
+    // And make this class extendable
+    Class.extend = arguments.callee;
+
+    // Добавление статического метода instance.
+    // Теперь экземпляры можно создавать не только при помощи ключевого
+    // слова new, но и при помощи метода create. Этот метод принимает
+    // параметры конструктора.
+    Class.instance = instance;
+
+    return Class;
 };
-
-exports.getCountries = function(req, res){
-    db.getCollection('ru_countries', function(data){
-        if(data.error){
-            base.sendJson(res, {error: data.error});
-            return;
-        }
-        if(data.collection){
-            data.collection.find().toArray(function(error, docs) {
-                if(error){
-                    base.sendJson(res, {error: error});
-                    return;
-                }
-                base.sendJson(res, docs);
-            });
-        }
-    });
-};
-
-exports.getCities = function(req, res){
-    var countryId  = req.body['_id_en_country'];
-    if(!countryId) return;
-
-    db.getCollection('en_countries', function(data){
-        if(data.error){
-            base.sendJson(res, {error: data.error});
-            return;
-        }
-        if(data.collection){
-            data.collection.find({_id_en_country: new db.ObjectID(countryId)}, {name: true}).toArray(function(error, docs) {
-                if(error){
-                    base.sendJson(res, {error: error});
-                    return;
-                }
-                base.sendJson(res, docs);
-            });
-        }
-    });
-};
-
-//exports.baseConvert = function(req, res){
-//    var en_countries,
-//        ru_countries
-//    db.getCollection('en_countries', function(data){
-//        en_countries = data.collection;
-//        db.getCollection('ru_countries', function(data){
-//            ru_countries = data.collection;
-//        });
-//        db.getCollection('country_', function(data){
-//            data.collection.find().toArray(function(error, docs) {
-//                for(var i = 0; i < docs.length; i++){
-//                    (function(i){
-//                        en_countries.findOne({name: docs[i].country_name_en}, function(error, doc) {
-//                            ru_countries.save({name: docs[i].country_name_ru, _id_en_country: doc['_id']}, function(){});
-//                        });
-//                    })(i);
-//                }
-//            });
-//        });
-//    });
-//};
+/**
+ * Глобальный класс Soshace
+ * @type {*}
+ */
+Soshace = Class.extend({
+    core: require('underscore')
+});

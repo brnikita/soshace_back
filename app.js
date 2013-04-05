@@ -1,28 +1,23 @@
-var express = require('express'),
-    http = require('http'),
-    path = require('path'),
-    src = require('./src'),
-    app = express();
-app.configure(function(){
-    app.set('port', process.env.PORT || 80);
-    app.set('views', __dirname + '/views');
-    app.set('view engine', 'jade');
-    app.use(express.favicon());
-    app.use(express.bodyParser());
-    app.use(express.logger('dev'));
-    app.use(express.methodOverride());
-    app.use(express.static(path.join(__dirname, 'public')));
-});
+require('./src/');
+require('./src/server');
+var Routs = {};
+Routs['/'] = function(request, callback){
+    callback({statusCode: 200, contentType: 'text/html', body: 'Hello world!!!'})
+}
+var server = Soshace.Server.instance();
+server.addRouts(Routs).start()
 
-app.configure('development', function(){
-    app.use(express.errorHandler());
-});
-http.createServer(app).listen(app.get('port'), function(){
-    console.log("Express server listening on port " + app.get('port'));
-});
 
-//Routes:
-app.get('/', src.index);
-app.get('/ping', src.ping);
-app.post('/getCountries', src.getCountries);
-app.post('/getCities', src.getCities);
+//Soshace.Db.instance().getCollection('ru_countries', function(data){
+//    if(data.error){
+//        return;
+//    }
+//    if(data.collection){
+//        data.collection.find().toArray(function(error, docs) {
+//            if(error){
+//                return;
+//            }
+//            console.log(docs);
+//        });
+//    }
+//});
