@@ -10,10 +10,10 @@ var APP = {
 
 
 
-Soshace.Db.open(function(){
+Soshace.Db.instance('soshace', function(){
+    Soshace.Server.instance(80, function(response, request){
 
-
-    Soshace.Server.start();
+    });
 });
 
 

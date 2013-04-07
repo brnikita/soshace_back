@@ -1,7 +1,9 @@
-/**
- * Created with JetBrains WebStorm.
- * User: Пользователь
- * Date: 06.04.13
- * Time: 0:40
- * To change this template use File | Settings | File Templates.
- */
+//    on: function(request, response){
+//        var pathName = url.parse(request.url).pathname;
+//
+//        this.routs[pathName](request, function(data){
+//            response.writeHead(data.statusCode, {"Content-Type": data.contentType});
+//            response.write(data.body);
+//            response.end();
+//        });
+//    }

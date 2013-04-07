@@ -1,41 +1,33 @@
 var /**
      * Модуль http
      */
-        http = require('http'),
-    /**
-     * Модуль url
-     */
-        url = require('url'),
-    /**
-     * Порт, который слушает наш сервер
-     */
-    port = 80;
-
+        http = require('http');
 
 /**
- * Объект Сервера http
+ * Класс Сервера http
+ * @Class
  * @type {*}
  */
 
-Soshace.Server = {
+Soshace.Server = Soshace.extend({
     /**
-     * Запускаем сервер
+     * Порт, который слушает наш сервер
+     * @type {Number}
      */
-    start: function(){
+    port: 8080,
+    /**
+     * Конструктор сервера
+     * @constructor
+     * @param port {Number}
+     * @param callback {Function}
+     */
+    init: function(port, callback){
         var _this = this;
+        _this.port = port;
         http.createServer(function(request, response){
-            _this.on(request, response);
+            callback(request, response);
         }).listen(port, function(){
                 console.log('Server start listening on port ', port);
             });
-    },
-    on: function(request, response){
-        var pathName = url.parse(request.url).pathname;
-        console.log(pathName);
-//        this.routs[pathName](request, function(data){
-//            response.writeHead(data.statusCode, {"Content-Type": data.contentType});
-//            response.write(data.body);
-//            response.end();
-//        });
     }
-};
+});
