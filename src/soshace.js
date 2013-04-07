@@ -5,8 +5,11 @@
 // Inspired by base2 and Prototype
 var initializing = false, fnTest = /xyz/.test(function(){xyz;}) ? /\b_super\b/ : /.*/;
 
-// The base Class implementation (does nothing)
-var Class = function(){};
+/**
+ * Глобальный класс Soshace
+ * @type {*}
+ */
+Soshace = function(){};
 
 
 // Метод создания нового экземпляра.
@@ -14,15 +17,15 @@ function instance(){
     initializing = true;
     var instance = new this();
     initializing = false;
-    if (typeof instance.init == 'function') {
+    if (typeof instance.init === 'function') {
         instance.init.apply(instance, arguments);
     }
     return instance;
 }
-Class.instance = instance;
+Soshace.instance = instance;
 
 // Create a new Class that inherits from this class
-Class.extend = function(prop) {
+Soshace.extend = function(prop) {
     var _super = this.prototype;
 
     // Instantiate a base class (but only create the instance,
@@ -34,8 +37,8 @@ Class.extend = function(prop) {
     // Copy the properties over onto the new prototype
     for (var name in prop) {
         // Check if we're overwriting an existing function
-        prototype[name] = typeof prop[name] == "function" &&
-            typeof _super[name] == "function" && fnTest.test(prop[name]) ?
+        prototype[name] = typeof prop[name] === "function" &&
+            typeof _super[name] === "function" && fnTest.test(prop[name]) ?
             (function(name, fn){
                 return function() {
                     var tmp = this._super;
@@ -56,34 +59,27 @@ Class.extend = function(prop) {
     }
 
     // The dummy class constructor
-    function Class() {
+    function Soshace() {
         // All construction is actually done in the init method
-        if (!initializing && typeof this.init == 'function') {
+        if (!initializing && typeof this.init === 'function') {
             this.init.apply(this, arguments);
         }
     }
 
     // Populate our constructed prototype object
-    Class.prototype = prototype;
+    Soshace.prototype = prototype;
 
     // Enforce the constructor to be what we expect
-    Class.prototype.constructor = Class;
+    Soshace.prototype.constructor = Soshace;
 
     // And make this class extendable
-    Class.extend = arguments.callee;
+    Soshace.extend = arguments.callee;
 
     // Добавление статического метода instance.
     // Теперь экземпляры можно создавать не только при помощи ключевого
     // слова new, но и при помощи метода create. Этот метод принимает
     // параметры конструктора.
-    Class.instance = instance;
+    Soshace.instance = instance;
 
-    return Class;
+    return Soshace;
 };
-/**
- * Глобальный класс Soshace
- * @type {*}
- */
-Soshace = Class.extend({
-    core: require('underscore')
-});
