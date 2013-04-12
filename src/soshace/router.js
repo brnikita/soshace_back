@@ -26,16 +26,16 @@ Soshace.Router = Soshace.extend({
             postId:'',
             badRout: false
         };
-        this.routGetParams();
     },
     /**
      * Метод, который парсит URL
      * @function
      */
-    routGetParams: function(){
+    parseRout: function(){
         var params = [];
         if(this.rout === '') {
-            return;
+            this.routParams.badRout = true;
+            return this.routParams;
         }
 
         // Пример: /ru
@@ -43,7 +43,7 @@ Soshace.Router = Soshace.extend({
             params = this.rout.match(/^\/(\w+)\/?$/);
             this.routParams.template = 'posts';
             this.routParams.language = params[1];
-            return;
+            return this.routParams;
         }
 
         // Пример: /ru/events
@@ -52,50 +52,51 @@ Soshace.Router = Soshace.extend({
             this.routParams.template = 'posts';
             this.routParams.language = params[1];
             this.routParams.category = params[2];
-            return;
+            return this.routParams;
         }
 
         // Пример: /ru/russia
-        if((new RegExp('^\/(?:' + this.languages.join('|') + ')\/\w+\/?$')).test(this.rout)){
+        if((new RegExp('^\/(?:' + this.languages.join('|') + ')\/\\w+\/?$')).test(this.rout)){
             params = this.rout.match(/^\/(\w+)\/(\w+)\/?$/);
             this.routParams.template = 'posts';
             this.routParams.language = params[1];
             this.routParams.country = params[2];
-            return;
+            return this.routParams;
         }
 
         // Пример: /ru/russia/events
-        if((new RegExp('^\/(?:' + this.languages.join('|') + ')\/\w+\/(?:events|places|persons)\/?$')).test(this.rout)){
+        if((new RegExp('^\/(?:' + this.languages.join('|') + ')\/\\w+\/(?:events|places|persons)\/?$')).test(this.rout)){
             params = this.rout.match(/^\/(\w+)\/(\w+)\/(events|places|persons)\/?$/);
             this.routParams.template = 'posts';
             this.routParams.language = params[1];
             this.routParams.country = params[2];
             this.routParams.category = params[3];
-            return;
+            return this.routParams;
         }
 
         // Пример: /ru/russia/msk
-        if((new RegExp('^\/(?:' + this.languages.join('|') + ')\/\w+\/\w+\/?$')).test(this.rout)){
+        if((new RegExp('^\/(?:' + this.languages.join('|') + ')\/\\w+\/\\w+\/?$')).test(this.rout)){
             params = this.rout.match(/^\/(\w+)\/(\w+)\/(\w+)\/?$/);
             this.routParams.template = 'posts';
             this.routParams.language = params[1];
             this.routParams.country = params[2];
             this.routParams.city = params[3];
-            return;
+            return this.routParams;
         }
 
         // Пример: /ru/russia/msk/events
-        if((new RegExp('^\/(?:' + this.languages.join('|') + ')\/\w+\/\w+\/(?:events|places|persons)\/?$')).test(this.rout)){
+        if((new RegExp('^\/(?:' + this.languages.join('|') + ')\/\\w+\/\\w+\/(?:events|places|persons)\/?$')).test(this.rout)){
             params = this.rout.match(/^\/(\w+)\/(\w+)\/(\w+)\/(events|places|persons)\/?$/);
             this.routParams.template = 'posts';
             this.routParams.language = params[1];
             this.routParams.country = params[2];
             this.routParams.city = params[3];
             this.routParams.category = params[4];
-            return;
+            return this.routParams;
         }
 
         this.routParams.badRout = true;
+        return this.routParams;
     }
 
 });

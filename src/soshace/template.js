@@ -5,7 +5,7 @@ var fs = require('fs'),
     templatesContent = {};
 
 for(var i = 0; i < templates.length; i++){
-    templatesContent[templates[i].replace(/\.jade/, '')] = jade.compile(fs.readFileSync(templatesDir + templates[i]))({title: 'Hello'});
+    templatesContent[templates[i].replace(/\.jade/, '')] = jade.compile(fs.readFileSync(templatesDir + templates[i]));
 }
 
 /**
@@ -13,21 +13,32 @@ for(var i = 0; i < templates.length; i++){
  * @type {*}
  */
 Soshace.Template = Soshace.extend({
-    content: null,
+    /**
+     * Переменные шаблона
+     */
+    local: null,
+    /**
+     * Имя шаблона
+     */
+    template: null,
     /**
      * @constructor
      * @param template
+     * @param local {Object}
      */
-    init: function(template){
-        if(templatesContent.hasOwnProperty(template)){
-            this.content = templatesContent[template];
-        }
+    init: function(template, local){
+            this.template = template;
+            this.local = local;
     },
     /**
      * @function
-     * @returns {null}
+     * @returns {String}
      */
-    getContent: function(){
-        return this.content;
+    templateRender: function(){
+        if(templatesContent.hasOwnProperty(this.template)){
+            return templatesContent[this.template](this.local);
+        }else{
+            return '<h1>Template not exist!</h1>';
+        }
     }
 });
