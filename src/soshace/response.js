@@ -10,20 +10,21 @@ Soshace.Response = Soshace.extend({
     /**
      * Тело ответа
      */
-    sendBody: null,
+    responseBody: null,
     /**
      * Данные о роуте(язык, страна, город, шаблон ...)
      */
-    routParams: null,
+    routData: null,
     /**
      * @constructor
      * @param request
      * @param response
+     * @param db Экземпляр класса Soshace.Db
      */
-    init: function(request, response){
+    init: function(request, response, db){
         this.response = response;
-        this.routParams = Soshace.Router.instance(request).parseRout();
-        this.sendBody = Soshace.Template.instance(this.routParams.template, this.routParams).templateRender();
+        this.routData = Soshace.Router.instance(request).getData();
+        this.responseBody = Soshace.Actions[this.routData.action].instance(this.routData.parsedRout, db).start();
     },
     /**
      * Метод отправки ответа сервера
@@ -31,7 +32,7 @@ Soshace.Response = Soshace.extend({
      */
     send: function(){
         this.response.writeHead(200, {"Content-Type": 'text/html'});
-        this.response.write(this.sendBody);
+        this.response.write(this.responseBody);
         this.response.end();
     }
 })
