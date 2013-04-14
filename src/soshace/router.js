@@ -1,6 +1,13 @@
 var url = require('url');
 
 Soshace.Router = Soshace.extend({
+    /**
+     * Основные разделы сайта
+     */
+    tabs: ['events', 'places', 'q&a'],
+    /**
+     * Поддерживаемые языки
+     */
     languages:['ru', 'en'],
     /**
      * Относительный URL
@@ -31,7 +38,7 @@ Soshace.Router = Soshace.extend({
             return this.data;
         }
 
-        // Язык. Пример: /ru
+        // Пример: /ru
         if((new RegExp('^\/(?:' + this.languages.join('|') + ')\/?$')).test(this.rout)){
             params = this.rout.match(/^\/(\w+)\/?$/);
             this.data.action = 'Posts';
@@ -39,8 +46,8 @@ Soshace.Router = Soshace.extend({
             return this.data
         }
 
-        // Язык > раздел. Пример: /ru/events
-        if((new RegExp('^\/(?:' + this.languages.join('|') + ')\/\\w+\/?$')).test(this.rout)){
+        // Пример: /ru/events
+        if((new RegExp('^\/(?:' + this.languages.join('|') + ')\/(?:' + this.tabs.join('|') + ')\/?$')).test(this.rout)){
             params = this.rout.match(/^\/(\w+)\/(\w+)\/?$/);
             this.data.action = 'Posts';
             this.data.parsedRout.language = params[1];
@@ -48,18 +55,49 @@ Soshace.Router = Soshace.extend({
             return this.data
         }
 
-        // Язык > раздел > id поста. Пример: /ru/events/123
-        if((new RegExp('^\/(?:' + this.languages.join('|') + ')\/\\w+\/[0-9]+\/?$')).test(this.rout)){
-            params = this.rout.match(/^\/(\w+)\/(\w+)\/([0-9]+)\/?$/);
-            this.data.parsedRout.action = 'Posts';
+        // Пример: /ru/russia
+        if((new RegExp('^\/(?:' + this.languages.join('|') + ')\/\\w+\/?$')).test(this.rout)){
+            params = this.rout.match(/^\/(\w+)\/(\w+)\/?$/);
+            this.data.action = 'Posts';
             this.data.parsedRout.language = params[1];
-            this.data.parsedRout.category = params[2];
-            this.data.parsedRout.postId = params[3];
+            this.data.parsedRout.country = params[2];
+            return this.data
+        }
+
+        // Пример: /ru/russia/events
+        if((new RegExp('^\/(?:' + this.languages.join('|') + ')\/\\w+\/(?:' + this.tabs.join('|') + ')\/?$')).test(this.rout)){
+            params = this.rout.match(/^\/(\w+)\/(\w+)\/(\w+)\/?$/);
+            this.data.action = 'Posts';
+            this.data.parsedRout.language = params[1];
+            this.data.parsedRout.country = params[2];
+            this.data.parsedRout.category = params[3];
+            return this.data
+        }
+
+        // Пример: /ru/russia/msk
+        if((new RegExp('^\/(?:' + this.languages.join('|') + ')\/\\w+\/\\w+\/?$')).test(this.rout)){
+            params = this.rout.match(/^\/(\w+)\/(\w+)\/(\w+)\/?$/);
+            this.data.action = 'Posts';
+            this.data.parsedRout.language = params[1];
+            this.data.parsedRout.country = params[2];
+            this.data.parsedRout.city = params[3];
+            return this.data
+        }
+
+        // Пример: /ru/russia/msk/events
+        if((new RegExp('^\/(?:' + this.languages.join('|') + ')\/\\w+\/\\w+\/(?:' + this.tabs.join('|') + ')\/?$')).test(this.rout)){
+            params = this.rout.match(/^\/(\w+)\/(\w+)\/(\w+)\/(\w+)\/?$/);
+            this.data.action = 'Posts';
+            this.data.parsedRout.language = params[1];
+            this.data.parsedRout.country = params[2];
+            this.data.parsedRout.city = params[3];
+            this.data.parsedRout.category = params[4];
             return this.data
         }
 
         this.data.parsedRout.badRout = true;
         return this.data
+        
     }
 
 });

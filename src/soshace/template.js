@@ -38,7 +38,6 @@ Soshace.Template = Soshace.extend({
      */
     templateRender: function(){
         if(templatesContent.hasOwnProperty(this.template)){
-            console.log('templatesContent[this.template]', this.template);
             return templatesContent[this.template](this.local);
         }else{
             return '<h1>Template not exist!</h1>';

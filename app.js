@@ -9,7 +9,7 @@ require('./src/soshace/response.js');
 
 
 var soshaceDB = Soshace.Db.instance('soshace', function(){
-    Soshace.Server.instance(80, function(request, response){
+    Soshace.Server.instance(8080, function(request, response){
         Soshace.Response.instance(request, response, soshaceDB).send();
     });
 });

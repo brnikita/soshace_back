@@ -26,8 +26,8 @@ Soshace.Server = Soshace.extend({
         _this.port = port;
         http.createServer(function(request, response){
             callback(request, response);
-        }).listen(port, function(){
-                console.log('Server start listening on port ', port);
+        }).listen(_this.port, function(){
+                console.log('Server start listening on port ', _this.port);
             });
     }
 });
