@@ -1,1 +1,16 @@
-
+body{
+    /*background: #1b0e00;*/
+}
+#header{
+    background: url(../img/spb.jpg) 50% 0 no-repeat;
+    height:500px;
+}
+#header-title{
+    height:100px;
+    position: relative;
+    top:400px;
+    background: rgba(0,0,0,.7);
+}
+#header-title h1{
+    color:#fff;
+}
