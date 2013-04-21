@@ -5,7 +5,7 @@ var fs = require('fs'),
     templatesContent = {};
 
 for(var i = 0; i < templates.length; i++){
-    templatesContent[templates[i].replace(/\.jade/, '')] = jade.compile(fs.readFileSync(templatesDir + templates[i]));
+    templatesContent[templates[i].replace(/\.jade/, '')] = jade.compile(fs.readFileSync(templatesDir + templates[i]) + fs.readFileSync(templatesDir + templates[i]));
 }
 
 /**

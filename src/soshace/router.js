@@ -33,8 +33,14 @@ Soshace.Router = Soshace.extend({
      */
     getData: function(){
         var params = [];
-        if(this.rout === '') {
-            this.data.parsedRout.badRout = true;
+        if(/^\/?$/.test(this.rout)) {
+            this.data.action = 'Posts';
+            return this.data;
+        }
+
+        //url: add-post
+        if(/^\/add-post\/?$/.test(this.rout)) {
+            this.data.action = 'AddPost';
             return this.data;
         }
 

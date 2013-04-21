@@ -5,6 +5,7 @@ require('./src/soshace/router.js');
 require('./src/soshace/template.js');
 require('./src/soshace/actions.js');
 require('./src/soshace/actions/posts.js');
+require('./src/soshace/actions/addPost.js');
 require('./src/soshace/response.js');
 
 
