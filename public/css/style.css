@@ -1,16 +1,111 @@
+*{
+    padding:0;
+    margin:0;
+}
 body{
-    /*background: #1b0e00;*/
+    background: #252525;
+    font-family: Verdana;
 }
+
+
 #header{
-    background: url(../img/spb.jpg) 50% 0 no-repeat;
-    height:500px;
+    margin: 0 auto;
+    width:960px;
+    height: 55px;
+    padding:10px 20px;
 }
-#header-title{
-    height:100px;
-    position: relative;
-    top:400px;
-    background: rgba(0,0,0,.7);
+#logo{
+    width:189px;
+    height:53px;
+    background: url(../img/logo.png);
+    display:inline-block;
 }
-#header-title h1{
+#region-info{
+    background: #575757;
+    text-align: center;
+    position:relative;
+    padding: 10px 0;
+}
+
+#region-info img{
+    -webkit-box-shadow: 0 0 3px 3px rgba(0, 0, 0, .3);
+    box-shadow: 0 0 3px 3px rgba(0, 0, 0, .3);
+    -moz-box-shadow: 0 0 3px 3px rgba(0, 0, 0, .3);
+}
+#region-info-description{
+    background: rgba(0, 0, 0, .5);
     color:#fff;
+    height:50px;
+    text-align: right;
+    font-size:30px;
+    padding:10px 20px;
+    width:750px;
+    position: absolute;
+    bottom:13px;
+    left:50%;
+    margin-left: -375px;
+}
+.blue{
+    background: #577ed6; /* Old browsers */
+/* IE9 SVG, needs conditional override of 'filter' to 'none' */
+    background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzU3N2VkNiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiM1NzZiZDYiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+    background: -moz-linear-gradient(top,  #577ed6 0%, #576bd6 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#577ed6), color-stop(100%,#576bd6)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #577ed6 0%,#576bd6 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #577ed6 0%,#576bd6 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #577ed6 0%,#576bd6 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #577ed6 0%,#576bd6 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#577ed6', endColorstr='#576bd6',GradientType=0 ); /* IE6-8 */
+}
+.green{
+    background: #3db832; /* Old browsers */
+    /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+    background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzNkYjgzMiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiM2MmFlMzAiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+    background: -moz-linear-gradient(top,  #3db832 0%, #62ae30 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#3db832), color-stop(100%,#62ae30)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #3db832 0%,#62ae30 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #3db832 0%,#62ae30 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #3db832 0%,#62ae30 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #3db832 0%,#62ae30 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3db832', endColorstr='#62ae30',GradientType=0 ); /* IE6-8 */
+}
+.yellow{
+    background: #ffcc00; /* Old browsers */
+    /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+    background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmY2MwMCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNmZmJhMDAiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+    background: -moz-linear-gradient(top,  #ffcc00 0%, #ffba00 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffcc00), color-stop(100%,#ffba00)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #ffcc00 0%,#ffba00 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #ffcc00 0%,#ffba00 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #ffcc00 0%,#ffba00 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #ffcc00 0%,#ffba00 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffcc00', endColorstr='#ffba00',GradientType=0 ); /* IE6-8 */
+
+}
+#main-menu{
+    width:1020px;
+    margin: 0 auto;
+    -webkit-box-shadow: 0 2px 1px 1px rgba(0, 0, 0, .3);
+    box-shadow: 0 2px 1px 1px rgba(0, 0, 0, .3);
+    -moz-box-shadow: 0 2px 1px 1px rgba(0, 0, 0, .3);
+    position: relative;
+}
+#main-menu a{
+    text-align: center;
+     display: inline-block;
+    height: 50px;
+    padding-top: 10px;
+    width: 340px;
+    color:#fff;
+    font-size: 30px;
+    font-weight: bold;
+    text-decoration: none;
+    text-shadow: 1px 1px 1px #383838;
+    filter: dropshadow(color=#383838, offx=1, offy=1);
+}
+#posts-list{
+    background: #fff;
+    width:1000px;
+    height:500px;
+    margin: 0 auto;
 }
